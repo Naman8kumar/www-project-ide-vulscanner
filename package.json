@@ -1,0 +1,33 @@
+{
+  "name": "owasp-vulscanner",
+  "version": "1.0.0",
+  "description": "A VS Code extension for vulnerability scanning",
+  "author": "OWASP",
+  "license": "MIT",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -w",
+    "lint": "eslint . --ext .ts,.js",
+    "build": "npm run compile",
+    "test": "jest"
+  },
+  "dependencies": {
+    "glob": "^9.0.0",
+    "minimatch": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/minimatch": "^9.0.0",
+    "typescript": "^5.2.0",
+    "eslint": "^8.50.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "owasp-vulscanner.runSpectral",
+        "title": "Run Spectral Linting"
+      }
+    ]
+  }
+}
