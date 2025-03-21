@@ -1,24 +1,18 @@
 import * as vscode from 'vscode';
-import { exec } from 'child_process';
+import { runSpectralLinting } from './spectralLint';
 
 export function activate(context: vscode.ExtensionContext) {
-    let disposable = vscode.commands.registerCommand('owasp-vulscanner.runSpectral', async () => {
+    let spectralDiagnostics = vscode.languages.createDiagnosticCollection("spectral");
+    context.subscriptions.push(spectralDiagnostics);
+
+    let disposable = vscode.commands.registerCommand('owasp-vulscanner.runSpectral', () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
             vscode.window.showErrorMessage("No active editor found.");
             return;
         }
 
-        const document = editor.document;
-        const filePath = document.fileName;
-
-        exec(`npx spectral lint ${filePath}`, (error, stdout, stderr) => {
-            if (error) {
-                vscode.window.showErrorMessage(`Error: ${stderr}`);
-                return;
-            }
-            vscode.window.showInformationMessage(stdout);
-        });
+        runSpectralLinting(editor.document, spectralDiagnostics);
     });
 
     context.subscriptions.push(disposable);

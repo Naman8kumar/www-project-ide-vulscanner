@@ -1,33 +1,35 @@
 {
   "name": "owasp-vulscanner",
-  "version": "1.0.0",
-  "description": "A VS Code extension for vulnerability scanning",
-  "author": "OWASP",
-  "license": "MIT",
+  "displayName": "OWASP VulScanner",
+  "description": "VS Code extension for Spectral-based API security linting.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": ["Linters"],
+  "activationEvents": ["onLanguage:yaml", "onCommand:extension.runSpectralLint"],
   "main": "./dist/extension.js",
-  "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -w",
-    "lint": "eslint . --ext .ts,.js",
-    "build": "npm run compile",
-    "test": "jest"
-  },
-  "dependencies": {
-    "glob": "^9.0.0",
-    "minimatch": "^9.0.0"
-  },
-  "devDependencies": {
-    "@types/glob": "^8.1.0",
-    "@types/minimatch": "^9.0.0",
-    "typescript": "^5.2.0",
-    "eslint": "^8.50.0"
-  },
   "contributes": {
     "commands": [
       {
-        "command": "owasp-vulscanner.runSpectral",
+        "command": "extension.runSpectralLint",
         "title": "Run Spectral Linting"
       }
     ]
+  },
+  "scripts": {
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "esbuild": "^0.17.0",
+    "typescript": "^4.9.5",
+    "vsce": "^2.11.0"
+  },
+  "dependencies": {
+    "@stoplight/spectral": "^6.6.0"
   }
 }
+
